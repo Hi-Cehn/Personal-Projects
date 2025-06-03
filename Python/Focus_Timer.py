@@ -1,4 +1,3 @@
-import os
 import time
 import keyboard
 
@@ -14,26 +13,37 @@ def option(choice):
         print("Timer started.")
         print("Press the q key on your keyboard to stop the timer.")
 
-        start = time.time_ns() / 1000000000
+        start = time.time()
+
+        exit_flag = True
 
         count = 5
 
-        while count:
-            print(count, end="\r")
+        try:
+            while count:
+                print("\r" + str(count), end="")
 
-            current = time.time_ns() / 1000000000
+                current = time.time()
 
-            if current - start >= 1:
-                count = count - 1
+                if current - start >= 1:
+                    count -= 1
 
-                start = current
+                    start = current
 
-            if keyboard.is_pressed("q"):
-                print("You have stopped the system. Goodbye.")
-                quit()
+                if keyboard.is_pressed("q"):
+                    print("\nYou have stopped the system. Goodbye.")
+                    exit_flag = False
+                    break
 
-        
-        print("Time's up.")
+                time.sleep(0.1)
+
+        finally:
+            keyboard.clear_all_hotkeys()
+            keyboard.unhook_all()
+
+        if exit_flag:
+            print("Time's up.")
+
         quit()
     else:
         quit()
