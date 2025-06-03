@@ -1,0 +1,3 @@
+Random programming ideas
+
+1. Logging program to handle all logging purposes
