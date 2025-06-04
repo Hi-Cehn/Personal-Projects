@@ -1,3 +1,4 @@
 Random programming ideas
 
 1. Logging program to handle all logging purposes
+2. Virtual pet on screen
