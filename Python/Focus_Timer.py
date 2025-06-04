@@ -8,6 +8,11 @@ def timer():
 
     option(choice)
 
+def time_translate(count):
+    format = time.strftime("%H:%M:%S", time.gmtime(count))
+
+    return format
+
 def option(choice):
     if choice == "Yes":
         print("Timer started.")
@@ -21,7 +26,8 @@ def option(choice):
 
         try:
             while count:
-                print("\r" + str(count), end="")
+                timer = time_translate(count)
+                print("\r" + str(timer), end="")
 
                 current = time.time()
 
@@ -31,7 +37,6 @@ def option(choice):
                     start = current
 
                 if keyboard.is_pressed("q"):
-                    print("\nYou have stopped the system. Goodbye.")
                     exit_flag = False
                     break
 
@@ -42,7 +47,9 @@ def option(choice):
             keyboard.unhook_all()
 
         if exit_flag:
-            print("Time's up.")
+            print("\rTime's up.")
+        else:
+            print("\nYou have stopped the system. Goodbye.")
 
         quit()
     else:
