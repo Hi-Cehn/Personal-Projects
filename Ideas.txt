@@ -2,3 +2,8 @@ Random programming ideas
 
 1. Logging program to handle all logging purposes
 2. Virtual pet on screen
+3. Youtube video downloader
+4. Audio player
+    Alt: Voice clip player/recorder
+5. Photo editor
+6. Finance recorder
