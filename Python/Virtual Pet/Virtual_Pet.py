@@ -1,13 +1,41 @@
 import wx
-import wx.lib.agw.advancedsplash as AS
+from wx.adv import Animation, AnimationCtrl
 
-app = wx.App()
+class TestFrame(wx.Frame):
 
-frame = wx.Frame(None, -1, "AdvancedSplash Test")
+    def __init__(self, parent, id, title):
+        wx.Frame.__init__(self, parent, -1, title, style=wx.BORDER_NONE)
+        panel = wx.Panel(self, -1, style=wx.TRANSPARENT_WINDOW)
 
-imagePath = "test.png"
-bitmap = wx.Bitmap(imagePath)
+        animation = Animation("dog.gif")
 
-splash = AS.AdvancedSplash(frame, bitmap=bitmap)
+        w, h = animation.GetSize()
 
-app.MainLoop()
+        width, height = alignment(w, h)
+
+        self.animation = AnimationCtrl(self, anim=animation, name="AnimationCtrl")
+        self.animation.Play()
+
+        size = (w, h)
+        self.SetSize(size)
+        self.Show()
+
+        width, height = alignment(w, h)
+        self.SetPosition((width, height))
+
+def alignment(w, h):
+    dw, dh = wx.DisplaySize()
+
+    width = dw - w
+    height = dh - h
+
+    return width, height
+
+def main():
+    app = wx.App(False)
+    frame = TestFrame(None, -1, "Test gif")
+    app.MainLoop()
+
+
+if __name__ == '__main__':
+    main()
