@@ -1,13 +1,18 @@
 import wx
 from wx.adv import Animation, AnimationCtrl
+import os
 
 class TestFrame(wx.Frame):
-
     def __init__(self, parent, id, title):
-        wx.Frame.__init__(self, parent, -1, title, style=wx.BORDER_NONE)
+        file_path = os.path.abspath(__file__)
+
+        # Get the directory containing the file (removes the filename)
+        dir_path = os.path.dirname(file_path)
+
+        wx.Frame.__init__(self, parent, -1, title, style=wx.BORDER_NONE | wx.STAY_ON_TOP)
         panel = wx.Panel(self, -1, style=wx.TRANSPARENT_WINDOW)
 
-        animation = Animation("dog.gif")
+        animation = Animation(os.path.join(dir_path, "dog.gif"))
 
         w, h = animation.GetSize()
 
