@@ -1,6 +1,9 @@
-import nicegui
 import os
 import csv
+import sys
+from PySide6 import QtCore, QtWidgets, QtGui
+
+import gui
 
 headers = ["Date", "Record name", "Change in value"]
 
@@ -17,19 +20,30 @@ def get_folder():
 
     return records_folder
 
-def create_new_record(name, records_folder):
+def create_new_record(record_path):
+    with open(record_path, "w", newline="") as record:
+        writer = csv.DictWriter(record, fieldnames=headers)
+        writer.writeheader()
+        writer.writerow(test_data)
+
+def create_new_entry(record_path):
+    with open(record_path, "a", newline="") as record:
+        writer = csv.DictWriter(record, fieldnames=headers)
+        writer.writerow(test_data)
+
+def get_record(name, records_folder):
     record_path = os.path.join(records_folder, name) + ".csv"
 
     if not os.path.isfile(record_path):
-        with open(record_path, "w", newline="") as record:
-            writer = csv.DictWriter(record, fieldnames=headers)
-            writer.writeheader()
-            writer.writerow(test_data)
+        create_new_record(record_path)
     else:
-        with open(record_path, "a", newline="") as record:
-            writer = csv.DictWriter(record, fieldnames=headers)
-            writer.writerow(test_data)
+        create_new_entry(record_path)
 
+if __name__ in {"__main__", "__mp_main__"}:
+    app = QtWidgets.QApplication([])
 
-if __name__ == "__main__":
-    create_new_record("Test", get_folder())
+    widget = gui.test()
+    widget.resize(800, 600)
+    widget.show()
+
+    sys.exit(app.exec())
